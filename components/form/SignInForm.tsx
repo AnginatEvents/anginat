@@ -22,6 +22,7 @@ const formSchema = z.object({
     email: z.string().email(),
     password: z
         .string()
+        .min(1, { message: "Password is required" })
         .min(6, { message: "Password needs to be atleast 6 characters long" }),
 });
 
@@ -45,11 +46,7 @@ const SignInForm = () => {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input
-                                    type="email"
-                                    placeholder="Email"
-                                    {...field}
-                                />
+                                <Input placeholder="Email" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
