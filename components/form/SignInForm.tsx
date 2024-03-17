@@ -78,7 +78,7 @@ const SignInForm = () => {
                     </Button>
                 </div>
                 <div className="text-right pr-3">
-                    <Link href="/auth/sign-up" className="text-orange-600">
+                    <Link href="/forgot-password" className="text-orange-600">
                         Forgot password?
                     </Link>
                 </div>

@@ -7,7 +7,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <Infinity size={200} />
                 <p className="text-4xl">Anginat</p>
             </div>
-            <div className="w-3/12 bg-gray-100 px-10 py-10 rounded-md">
+            <div className="w-3/12 bg-gray-100  px-10 py-10 rounded-md">
                 {children}
             </div>
         </div>
