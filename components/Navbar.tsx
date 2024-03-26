@@ -3,9 +3,11 @@ import Link from "next/link";
 import { Infinity } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
+import LogOutCard from "@/components/ui/logout-card";
 
 const Navbar = () => {
     const session = useSession();
+
     return (
         <div className="bg-zinc-200 py-2 border-b border-s-zinc-500 fixed w-full z-10 top-0">
             <div className="container items-center flex justify-between">
@@ -13,7 +15,10 @@ const Navbar = () => {
                     <Infinity strokeWidth="3px" size="48px" />
                 </Link>
                 {session.status == "authenticated" ? (
-                    <Button onClick={() => signOut()}>Sign out</Button>
+                    <LogOutCard
+                        name={session.data?.user?.name}
+                        avatarURL={session.data?.user?.image}
+                    />
                 ) : (
                     <div className="space-x-1">
                         <Link
