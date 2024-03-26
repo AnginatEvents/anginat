@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { GoogleButton } from "@/components/ui/google-button";
+import { Mail } from "lucide-react";
 
 // Form components
 import {
@@ -42,7 +43,14 @@ const ForgotForm = () => {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input placeholder="Email" {...field} />
+                                <div className="relative">
+                                    <Mail className="text-gray-300 absolute top-1/2 left-1 -translate-y-1/2" />
+                                    <Input
+                                        className="px-8"
+                                        placeholder="Email"
+                                        {...field}
+                                    />
+                                </div>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
