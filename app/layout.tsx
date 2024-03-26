@@ -4,6 +4,7 @@ import AuthProvider from "./context/AuthProvider";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,6 +42,7 @@ export default function RootLayout({
                         {children}
                     </main>
                 </AuthProvider>
+                <SpeedInsights />
             </body>
         </html>
     );
