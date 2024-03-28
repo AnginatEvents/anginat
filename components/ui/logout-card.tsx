@@ -11,6 +11,7 @@ import Link from "next/link";
 
 interface LogOutCardProps {
     name?: string | null | undefined;
+    email?: string | null | undefined;
     avatarURL?: string | null | undefined;
 }
 
@@ -37,16 +38,28 @@ const LogOutCard: FC<LogOutCardProps> = (props) => {
                                 {Array.from(props.name!)[0]}
                             </AvatarFallback>
                         </Avatar>
-                        {props.name}
+                        <div className="flex flex-col">
+                            <div>{props.name}</div>
+                            <div className="text-gray-400 text-xs">
+                                {props.email}
+                            </div>
+                        </div>
                     </div>
                     <div className="p-2 flex gap-1">
                         <Link
-                            className={buttonVariants({ variant: "default" })}
+                            className={buttonVariants({
+                                size: "sm",
+                                variant: "default",
+                            })}
                             href="/dashboard"
                         >
                             Go to Dashboard
                         </Link>{" "}
-                        <Button variant="destructive" onClick={() => signOut()}>
+                        <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => signOut()}
+                        >
                             Sign out
                         </Button>
                     </div>

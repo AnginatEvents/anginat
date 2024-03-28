@@ -18,6 +18,7 @@ const Navbar = () => {
                     <LogOutCard
                         name={session.data?.user?.name}
                         avatarURL={session.data?.user?.image}
+                        email={session.data.user?.email}
                     />
                 ) : (
                     <div className="space-x-1">
