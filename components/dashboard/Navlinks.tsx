@@ -24,6 +24,7 @@ const links: Link[] = [
             },
             {
                 name: "Dual Code",
+                // href: "/dashboard/authenticator/dual",
                 href: "",
                 children: [],
             },
@@ -35,33 +36,38 @@ const links: Link[] = [
         children: [
             {
                 name: "OnSite",
-                href: "/dashboard/registration/onsite",
+                // href: "/dashboard/registration/onsite",
+                href: "",
                 children: [],
             },
             {
                 name: "Online",
-                href: "/dashboard/registration/online",
+                // href: "/dashboard/registration/online",
+                href: "",
                 children: [],
             },
         ],
     },
     {
         name: "Scanning",
-        href: "/dashboard/scanning",
+        href: "",
         children: [
             {
                 name: "Kit Scanning",
-                href: "/dashboard/scanning/kit",
+                // href: "/dashboard/scanning/kit",
+                href: "",
                 children: [],
             },
             {
                 name: "Meal Scanning",
-                href: "/dashboard/scanning/meal",
+                // href: "/dashboard/scanning/meal",
+                href: "",
                 children: [],
             },
             {
                 name: "Hall Scanning",
-                href: "/dashboard/scanning/hall",
+                // href: "/dashboard/scanning/hall",
+                href: "",
                 children: [],
             },
         ],
@@ -96,14 +102,14 @@ export default function Navlinks() {
                             <AccordionContent>
                                 {link.children.map((child) => {
                                     return child.href.length === 0 ? (
-                                        <div className="w-full">
+                                        <div className="pl-3 w-full">
                                             {child.name}
                                         </div>
                                     ) : (
                                         <Link
                                             href={child.href}
                                             key={child.name}
-                                            className="block w-full"
+                                            className="block pl-3 w-full"
                                         >
                                             {child.name}
                                         </Link>
