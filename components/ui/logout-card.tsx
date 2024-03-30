@@ -26,7 +26,7 @@ const LogOutCard: FC<LogOutCardProps> = (props) => {
                     </AvatarFallback>
                 </Avatar>
             </HoverCardTrigger>
-            <HoverCardContent align="end">
+            <HoverCardContent align="end" className="container">
                 <div>
                     <div className="flex gap-2">
                         <Avatar>
@@ -54,7 +54,7 @@ const LogOutCard: FC<LogOutCardProps> = (props) => {
                             href="/dashboard"
                         >
                             Go to Dashboard
-                        </Link>{" "}
+                        </Link>
                         <Button
                             size="sm"
                             variant="destructive"
