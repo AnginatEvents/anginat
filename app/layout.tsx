@@ -39,7 +39,7 @@ export default function RootLayout({
                 <AuthProvider>
                     <main className="h-screen flex flex-col justify-center items-center">
                         <Navbar />
-                        {children}
+                        <div className="pt-20 w-full h-full">{children}</div>
                     </main>
                 </AuthProvider>
                 <SpeedInsights />
