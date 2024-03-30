@@ -49,7 +49,7 @@ const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
 
     return (
         <div className={className}>
-            <h1 className="font-bold text-3xl pb-2"> Sign Up </h1>
+            <h1 className="pb-2 text-3xl font-bold"> Sign Up </h1>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -121,12 +121,12 @@ const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
                         <Button
                             type="submit"
                             variant="default"
-                            className="self-stretch w-full"
+                            className="w-full self-stretch"
                         >
                             Sign In
                         </Button>
                     </div>
-                    <div className="text-right pr-3">
+                    <div className="pr-3 text-right">
                         Already have an account?
                         <Link href="/sign-in" className="text-orange-600">
                             Log In

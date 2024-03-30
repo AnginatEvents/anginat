@@ -36,12 +36,7 @@ export default function RootLayout({
                 </Script>
             </head>
             <body className={inter.className}>
-                <AuthProvider>
-                    <main className="h-screen flex flex-col justify-center items-center">
-                        <Navbar />
-                        <div className="pt-20 w-full h-full">{children}</div>
-                    </main>
-                </AuthProvider>
+                <AuthProvider>{children}</AuthProvider>
                 <SpeedInsights />
             </body>
         </html>

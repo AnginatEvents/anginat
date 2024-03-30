@@ -9,8 +9,8 @@ const Navbar = () => {
     const session = useSession();
 
     return (
-        <div className="bg-zinc-200 h-16 py-2 border-b border-s-zinc-500 fixed w-full z-10 top-0">
-            <div className="container items-center flex justify-between">
+        <div className="fixed top-0 z-10 h-16 w-full border-b border-s-zinc-500 bg-zinc-200 py-2">
+            <div className="container flex items-center justify-between">
                 <Link href="/">
                     <Infinity strokeWidth="3px" size="48px" />
                 </Link>

@@ -40,12 +40,12 @@ const LogOutCard: FC<LogOutCardProps> = (props) => {
                         </Avatar>
                         <div className="flex flex-col">
                             <div>{props.name}</div>
-                            <div className="text-gray-400 text-xs">
+                            <div className="text-xs text-gray-400">
                                 {props.email}
                             </div>
                         </div>
                     </div>
-                    <div className="p-2 flex gap-1">
+                    <div className="flex gap-1 p-2">
                         <Link
                             className={buttonVariants({
                                 size: "sm",

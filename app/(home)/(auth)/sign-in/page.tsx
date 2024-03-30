@@ -3,7 +3,7 @@ import SignInForm from "@/components/form/SignInForm";
 const SignIn = () => {
     return (
         <>
-            <h1 className="font-bold text-3xl pb-5"> Hi, Welcome 👋 </h1>
+            <h1 className="pb-5 text-3xl font-bold"> Hi, Welcome 👋 </h1>
             <SignInForm />{" "}
         </>
     );

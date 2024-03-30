@@ -2,9 +2,9 @@ import Sidenav from "@/components/dashboard/Sidenav";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className="flex flex-row gap-3 h-full">
+        <div className="flex h-screen flex-row gap-3">
             <Sidenav />
-            <main>{children}</main>
+            <main className="w-full bg-secondary">{children}</main>
         </div>
     );
 };

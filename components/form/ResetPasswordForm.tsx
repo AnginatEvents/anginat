@@ -82,7 +82,7 @@ const ResetPasswordForm = () => {
                     <Button
                         type="submit"
                         variant="default"
-                        className="self-stretch w-full"
+                        className="w-full self-stretch"
                     >
                         Reset Password
                     </Button>

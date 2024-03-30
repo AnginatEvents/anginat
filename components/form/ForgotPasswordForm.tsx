@@ -44,7 +44,7 @@ const ForgotForm = () => {
                         <FormItem>
                             <FormControl>
                                 <div className="relative">
-                                    <Mail className="text-gray-300 absolute top-1/2 left-1 -translate-y-1/2" />
+                                    <Mail className="absolute left-1 top-1/2 -translate-y-1/2 text-gray-300" />
                                     <Input
                                         className="px-8"
                                         placeholder="Email"
@@ -61,7 +61,7 @@ const ForgotForm = () => {
                     <Button
                         type="submit"
                         variant="default"
-                        className="self-stretch w-full"
+                        className="w-full self-stretch"
                     >
                         Send OTP
                     </Button>

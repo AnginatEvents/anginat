@@ -72,12 +72,12 @@ const SignInForm = () => {
                     <Button
                         type="submit"
                         variant="default"
-                        className="self-stretch w-full"
+                        className="w-full self-stretch"
                     >
                         Sign In
                     </Button>
                 </div>
-                <div className="text-right pr-3">
+                <div className="pr-3 text-right">
                     <Link href="/forgot-password" className="text-orange-600">
                         Forgot password?
                     </Link>

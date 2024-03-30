@@ -1,3 +1,4 @@
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {
     Accordion,
@@ -5,6 +6,7 @@ import {
     AccordionItem,
     AccordionContent,
 } from "@/components/ui/accordion";
+import clsx from "clsx";
 
 interface Link {
     name: string;
@@ -80,8 +82,9 @@ const links: Link[] = [
 ];
 
 export default function Navlinks() {
+    const pathName = usePathname();
     return (
-        <Accordion type="single" collapsible>
+        <Accordion className="w-full" type="single" collapsible>
             <div className=" flex flex-col">
                 {links.map((link) => {
                     return (
@@ -89,6 +92,13 @@ export default function Navlinks() {
                             value={link.name}
                             key={link.name}
                             disabled={link.children.length === 0}
+                            className={clsx(
+                                "w-full hover:bg-secondary",
+                                pathName.startsWith(link.href) &&
+                                    link.href.length > 0
+                                    ? "hover:bg-primary-500 bg-primary text-white"
+                                    : "bg-white text-black hover:bg-secondary",
+                            )}
                         >
                             <AccordionTrigger>
                                 {link.href.length === 0 ? (
@@ -102,14 +112,22 @@ export default function Navlinks() {
                             <AccordionContent>
                                 {link.children.map((child) => {
                                     return child.href.length === 0 ? (
-                                        <div className="pl-3 w-full">
+                                        <div
+                                            className="w-full py-2 pl-3"
+                                            key={child.name}
+                                        >
                                             {child.name}
                                         </div>
                                     ) : (
                                         <Link
                                             href={child.href}
                                             key={child.name}
-                                            className="block pl-3 w-full"
+                                            className={clsx(
+                                                "block w-full py-2 pl-2",
+                                                pathName.includes(child.href)
+                                                    ? "bg-primary text-white"
+                                                    : "bg-white text-black",
+                                            )}
                                         >
                                             {child.name}
                                         </Link>
