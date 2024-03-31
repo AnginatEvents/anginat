@@ -7,10 +7,12 @@ import {
     AccordionContent,
 } from "@/components/ui/accordion";
 import clsx from "clsx";
+import { QrCode, Settings, ShieldCheck, UserRoundCheck } from "lucide-react";
 
 interface Link {
     name: string;
     href: string;
+    icon?: JSX.Element;
     children: Link[];
 }
 
@@ -18,6 +20,7 @@ const links: Link[] = [
     {
         name: "Authenticator",
         href: "",
+        icon: <ShieldCheck />,
         children: [
             {
                 name: "Single Code",
@@ -26,8 +29,8 @@ const links: Link[] = [
             },
             {
                 name: "Dual Code",
-                // href: "/dashboard/authenticator/dual",
-                href: "",
+                href: "/dashboard/authenticator/dual",
+                // href: "",
                 children: [],
             },
         ],
@@ -35,6 +38,7 @@ const links: Link[] = [
     {
         name: "Registration",
         href: "",
+        icon: <UserRoundCheck />,
         children: [
             {
                 name: "OnSite",
@@ -53,6 +57,7 @@ const links: Link[] = [
     {
         name: "Scanning",
         href: "",
+        icon: <QrCode />,
         children: [
             {
                 name: "Kit Scanning",
@@ -77,6 +82,7 @@ const links: Link[] = [
     {
         name: "Settings",
         href: "",
+        icon: <Settings />,
         children: [],
     },
 ];
@@ -101,13 +107,16 @@ export default function Navlinks() {
                                             pathName.includes(child.href) &&
                                             child.href.length > 0,
                                     )
-                                    ? "hover:bg-primary-500 bg-primary text-white"
+                                    ? "bg-primary text-white hover:bg-slate-800"
                                     : "bg-white text-black hover:bg-secondary",
                             )}
                         >
                             <AccordionTrigger>
                                 {link.href.length === 0 ? (
-                                    <div>{link.name}</div>
+                                    <div className="flex h-8 flex-row gap-2">
+                                        {link.icon}
+                                        {link.name}
+                                    </div>
                                 ) : (
                                     <Link href={link.href} key={link.name}>
                                         {link.name}
@@ -130,8 +139,8 @@ export default function Navlinks() {
                                             className={clsx(
                                                 "block w-full rounded-l py-2 pl-2",
                                                 pathName.includes(child.href)
-                                                    ? "bg-gray-600 text-white"
-                                                    : "text-black",
+                                                    ? "bg-slate-700 text-gray-500 hover:bg-slate-700"
+                                                    : "text-gray-500 hover:bg-slate-600 hover:text-gray-400",
                                             )}
                                         >
                                             {child.name}
