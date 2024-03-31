@@ -3,7 +3,7 @@ import { Infinity } from "lucide-react";
 const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="flex h-full w-full flex-row items-center justify-center md:justify-between">
-            <div className="hidden flex-col items-center justify-center px-20 md:block">
+            <div className="hidden flex-col items-center justify-center px-20 text-center md:block">
                 <Infinity size={200} />
                 <p className="text-4xl">Anginat</p>
             </div>
