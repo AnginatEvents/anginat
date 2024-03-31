@@ -4,7 +4,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
         <main className="flex h-screen flex-col items-center justify-center">
             <Navbar />
-            <div className="h-full w-full pt-20">{children}</div>
+            <div className="container flex h-full w-full justify-center pt-20">
+                {children}
+            </div>
         </main>
     );
 };
