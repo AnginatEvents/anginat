@@ -6,12 +6,16 @@ import { cn } from "@/lib/utils";
 import { CircleHelp, LogOut } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { signOut } from "next-auth/react";
+import LogoCard from "@/components/dashboard/LogoCard";
 
 const Sidenav = () => {
     return (
         <div className="flex h-full w-72 flex-col justify-between ">
-            <div className="w-full">
-                <Navlinks />
+            <div>
+                <LogoCard />
+                <div className="w-full">
+                    <Navlinks />
+                </div>
             </div>
             <div>
                 <Separator />
