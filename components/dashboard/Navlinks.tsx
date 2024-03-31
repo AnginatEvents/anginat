@@ -111,7 +111,9 @@ export default function Navlinks() {
                                     : "bg-white text-black hover:bg-secondary",
                             )}
                         >
-                            <AccordionTrigger>
+                            <AccordionTrigger
+                                dropIcon={link.children.length > 0}
+                            >
                                 {link.href.length === 0 ? (
                                     <div className="flex h-8 flex-row gap-2">
                                         {link.icon}
