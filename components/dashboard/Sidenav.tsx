@@ -27,7 +27,9 @@ const Sidenav = () => {
                 <Button
                     variant={"ghost"}
                     className="block w-full text-left text-gray-500"
-                    onClick={() => signOut()}
+                    onClick={() =>
+                        signOut({ callbackUrl: "/", redirect: true })
+                    }
                 >
                     <LogOut className="mr-1 inline" />
                     Sign Out
