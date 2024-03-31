@@ -127,7 +127,7 @@ export default function Navlinks() {
                                 {link.children.map((child) => {
                                     return child.href.length === 0 ? (
                                         <div
-                                            className="w-full rounded-s py-2 pl-3 text-gray-500"
+                                            className="w-full rounded-l py-2 pl-3 text-gray-500"
                                             key={child.name}
                                         >
                                             {child.name}
@@ -137,9 +137,9 @@ export default function Navlinks() {
                                             href={child.href}
                                             key={child.name}
                                             className={clsx(
-                                                "block w-full rounded-l py-2 pl-2",
+                                                "block w-full rounded-l py-2 pl-3 font-bold",
                                                 pathName.includes(child.href)
-                                                    ? "bg-slate-700 text-gray-500 hover:bg-slate-700"
+                                                    ? "bg-slate-700 text-gray-300 hover:bg-slate-700"
                                                     : "text-gray-500 hover:bg-slate-600 hover:text-gray-400",
                                             )}
                                         >
