@@ -38,8 +38,8 @@ const links: Link[] = [
         children: [
             {
                 name: "OnSite",
-                // href: "/dashboard/registration/onsite",
-                href: "",
+                href: "/dashboard/registration/onsite",
+                // href: "",
                 children: [],
             },
             {
@@ -94,8 +94,13 @@ export default function Navlinks() {
                             disabled={link.children.length === 0}
                             className={clsx(
                                 "w-full hover:bg-secondary",
-                                pathName.startsWith(link.href) &&
-                                    link.href.length > 0
+                                (pathName.includes(link.href) &&
+                                    link.href.length > 0) ||
+                                    link.children.some(
+                                        (child) =>
+                                            pathName.includes(child.href) &&
+                                            child.href.length > 0,
+                                    )
                                     ? "hover:bg-primary-500 bg-primary text-white"
                                     : "bg-white text-black hover:bg-secondary",
                             )}
@@ -113,7 +118,7 @@ export default function Navlinks() {
                                 {link.children.map((child) => {
                                     return child.href.length === 0 ? (
                                         <div
-                                            className="w-full py-2 pl-3"
+                                            className="w-full rounded-s py-2 pl-3 text-gray-500"
                                             key={child.name}
                                         >
                                             {child.name}
@@ -123,10 +128,10 @@ export default function Navlinks() {
                                             href={child.href}
                                             key={child.name}
                                             className={clsx(
-                                                "block w-full py-2 pl-2",
+                                                "block w-full rounded-l py-2 pl-2",
                                                 pathName.includes(child.href)
-                                                    ? "bg-primary text-white"
-                                                    : "bg-white text-black",
+                                                    ? "bg-gray-600 text-white"
+                                                    : "text-black",
                                             )}
                                         >
                                             {child.name}
