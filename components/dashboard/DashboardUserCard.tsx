@@ -45,7 +45,7 @@ const DashboardUserCard = () => {
                     src={session.data?.user?.image!}
                     alt="User Avatar"
                 />
-                <AvatarFallback>{session.data?.user?.name[0]}</AvatarFallback>
+                <AvatarFallback>{session.data?.user?.name![0]}</AvatarFallback>
             </Avatar>
             <div className="space-y-0.5">
                 <div className="text-lg">{session.data?.user?.name}</div>
