@@ -1,4 +1,10 @@
 import SignInForm from "@/components/form/SignInForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "SignIn | Anginat",
+    description: "Sign in to your account",
+};
 
 const SignIn = () => {
     return (

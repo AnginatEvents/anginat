@@ -1,4 +1,10 @@
 import ForgotPasswordForm from "@/components/form/ForgotPasswordForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Anginat | Forgot Password",
+    description: "Sign in to your account",
+};
 
 const Page = () => {
     return (
