@@ -1,12 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { FC } from "react";
 import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from "@/components/ui/hover-card";
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 import Link from "next/link";
 
 interface LogOutCardProps {
@@ -17,16 +17,16 @@ interface LogOutCardProps {
 
 const LogOutCard: FC<LogOutCardProps> = (props) => {
     return (
-        <HoverCard>
-            <HoverCardTrigger>
+        <Popover>
+            <PopoverTrigger>
                 <Avatar>
                     <AvatarImage src={props.avatarURL!} alt="User Avatar" />
                     <AvatarFallback>
                         {Array.from(props.name!)[0]}
                     </AvatarFallback>
                 </Avatar>
-            </HoverCardTrigger>
-            <HoverCardContent align="end" className="container">
+            </PopoverTrigger>
+            <PopoverContent align="end" className="container">
                 <div>
                     <div className="flex gap-2">
                         <Avatar>
@@ -64,8 +64,8 @@ const LogOutCard: FC<LogOutCardProps> = (props) => {
                         </Button>
                     </div>
                 </div>
-            </HoverCardContent>
-        </HoverCard>
+            </PopoverContent>
+        </Popover>
     );
 };
 
