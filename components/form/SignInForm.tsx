@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { GoogleButton } from "@/components/ui/google-button";
+import { useSession } from "next-auth/react";
 
 // Form components
 import {
@@ -17,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link.js";
+import { redirect } from "next/navigation";
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -37,6 +39,7 @@ const SignInForm = () => {
     function onSubmit(data: z.infer<typeof formSchema>) {
         console.log(data);
     }
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
