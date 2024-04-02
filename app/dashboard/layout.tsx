@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Dashboard for Anginat",
 };
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className="flex h-screen flex-row">
             <Sidenav />
@@ -19,6 +19,4 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </main>
         </div>
     );
-};
-
-export default Layout;
+}
