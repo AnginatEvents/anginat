@@ -52,6 +52,7 @@ export const columns: ColumnDef<clientSideCode>[] = [
             return (
                 <Button
                     variant="ghost"
+                    className="px-0"
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
@@ -65,15 +66,54 @@ export const columns: ColumnDef<clientSideCode>[] = [
     {
         // TODO: Format shit here instead of in page.tsx
         accessorKey: "lastCheckedTime",
-        header: "Checked Time",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    className="px-0"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                >
+                    Checked Time
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
     },
     {
         accessorKey: "uploaded",
-        header: "Uploaded",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    className="px-0"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                >
+                    Uploaded
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
     },
     {
         accessorKey: "checked",
-        header: "Access Time",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost_text_left"
+                    className="px-0"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                >
+                    Access Time
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
         cell: ({ row }) => {
             const checked = row.getValue("checked") as string;
             return (
@@ -93,7 +133,7 @@ export const columns: ColumnDef<clientSideCode>[] = [
             return (
                 <div className="flex gap-1">
                     <Button
-                        variant="ghost"
+                        variant="ghost_text_left"
                         className="px-1"
                         onClick={() => {
                             alert(`Delete pressed for  ${payment.code}`);
