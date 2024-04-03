@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent } from "@/components/ui/popover";
-import { PopoverTrigger } from "@radix-ui/react-popover";
 import { ColumnDef } from "@tanstack/react-table";
 import { TimerReset, Trash2 } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export type clientSideCode = {
     code: string;
@@ -16,13 +16,51 @@ export type clientSideCode = {
 
 export const columns: ColumnDef<clientSideCode>[] = [
     {
+        id: "select",
+        header: ({ table }) => {
+            return (
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && "indeterminate")
+                    }
+                    onCheckedChange={(value) =>
+                        table.toggleAllPageRowsSelected(!!value)
+                    }
+                    aria-label="Select all rows"
+                />
+            );
+        },
+        cell: ({ row }) => {
+            return (
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            );
+        },
+    },
+    {
         accessorKey: "code",
         header: "Code",
     },
     {
         // TODO: Format shit here instead of in page
         accessorKey: "lastCheckedDate",
-        header: "Checked Date",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                >
+                    Checked Date
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
     },
     {
         // TODO: Format shit here instead of in page.tsx
