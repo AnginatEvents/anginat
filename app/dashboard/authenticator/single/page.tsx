@@ -19,7 +19,7 @@ export default async function Page() {
     }));
 
     return (
-        <div className="container">
+        <div className="">
             <DataTable columns={columns} data={data} />
         </div>
     );
