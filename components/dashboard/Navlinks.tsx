@@ -99,7 +99,7 @@ export default function Navlinks() {
                             key={link.name}
                             disabled={link.children.length === 0}
                             className={clsx(
-                                "w-full hover:bg-secondary",
+                                "my-2 w-full rounded-lg px-2 hover:bg-secondary",
                                 (pathName.includes(link.href) &&
                                     link.href.length > 0) ||
                                     link.children.some(
@@ -115,7 +115,7 @@ export default function Navlinks() {
                                 dropIcon={link.children.length > 0}
                             >
                                 {link.href.length === 0 ? (
-                                    <div className="flex h-8 flex-row gap-2">
+                                    <div className="flex h-5 flex-row gap-2 align-middle">
                                         {link.icon}
                                         {link.name}
                                     </div>

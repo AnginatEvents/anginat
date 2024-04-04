@@ -10,14 +10,14 @@ import LogoCard from "@/components/dashboard/LogoCard";
 
 const Sidenav = () => {
     return (
-        <div className="flex h-full w-72 flex-col justify-between ">
+        <div className="fixed z-0 flex h-full w-72 flex-col justify-between bg-white px-6 ">
             <div>
                 <LogoCard />
                 <div className="w-full">
                     <Navlinks />
                 </div>
             </div>
-            <div>
+            <div className="pb-8">
                 <Separator />
                 <Link
                     href="/help"

@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div className="flex h-screen flex-row">
             <Sidenav />
-            <main className="w-full bg-secondary">
+            <main className="w-full bg-secondary pl-72">
                 <DashboardTopBar />
                 <Separator />
                 {children}
