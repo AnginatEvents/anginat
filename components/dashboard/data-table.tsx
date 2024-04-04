@@ -28,6 +28,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,6 +38,11 @@ import {
     ChevronLast,
     ChevronLeft,
     ChevronRight,
+    Download,
+    Eye,
+    TimerReset,
+    Trash2,
+    Upload,
 } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
@@ -70,20 +76,66 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="px-4">
-            <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter codes..."
-                    value={
-                        (table.getColumn("code")?.getFilterValue() as string) ??
-                        ""
-                    }
-                    onChange={(event) =>
-                        table
-                            .getColumn("code")
-                            ?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
+            <div className="flex items-center justify-between">
+                <div className="flex items-center py-4">
+                    <Input
+                        placeholder="Filter codes..."
+                        value={
+                            (table
+                                .getColumn("code")
+                                ?.getFilterValue() as string) ?? ""
+                        }
+                        onChange={(event) =>
+                            table
+                                .getColumn("code")
+                                ?.setFilterValue(event.target.value)
+                        }
+                        className="max-w-sm"
+                    />
+                    <Button
+                        variant="outline"
+                        onClick={() => {
+                            table
+                                .getFilteredSelectedRowModel()
+                                .rows.forEach((row) => {
+                                    toast.info("Attempting to delete", {
+                                        // @ts-expect-error
+                                        description: row.original.code,
+                                    });
+                                });
+                        }}
+                        className="mx-0 ml-2 rounded-none"
+                    >
+                        <Trash2 /> Delete
+                    </Button>
+                    <Button
+                        variant="outline"
+                        onClick={() => {
+                            table
+                                .getFilteredSelectedRowModel()
+                                .rows.forEach((row) => {
+                                    toast.info("Attempting to reset", {
+                                        // @ts-expect-error
+                                        description: row.original.code,
+                                    });
+                                });
+                        }}
+                        className="ml-2 rounded-none"
+                    >
+                        <TimerReset /> Reset
+                    </Button>
+                </div>
+                <div>
+                    <Button variant="outline" className="mr-0 rounded-none">
+                        <Upload className="text-red-400" /> Export
+                    </Button>
+                    <Button variant="outline" className="mr-1.5 rounded-none">
+                        <Download className="text-green-400" /> Import
+                    </Button>
+                    <Button className="rounded-sm">
+                        <Eye /> User Demo
+                    </Button>
+                </div>
             </div>
             <div className="w-full rounded-md border">
                 <Table>
@@ -152,7 +204,7 @@ export function DataTable<TData, TValue>({
                         </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                        {[5, 10, 15, 20].map((pageSize) => (
+                        {[5, 10, 15, 20, 50].map((pageSize) => (
                             <SelectItem
                                 key={pageSize}
                                 value={pageSize.toString()}
