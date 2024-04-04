@@ -21,9 +21,23 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import {
+    ChevronFirst,
+    ChevronLast,
+    ChevronLeft,
+    ChevronRight,
+} from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -55,7 +69,7 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div>
+        <div className="px-4">
             <div className="flex items-center py-4">
                 <Input
                     placeholder="Filter codes..."
@@ -100,7 +114,10 @@ export function DataTable<TData, TValue>({
                                     }
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
+                                        <TableCell
+                                            className="py-2.5"
+                                            key={cell.id}
+                                        >
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext(),
@@ -122,22 +139,60 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <div>
+            <div className="flex items-center justify-end gap-2 pt-1">
+                <Select
+                    onValueChange={(e) => {
+                        table.setPageSize(Number(e));
+                    }}
+                >
+                    Rows per page:
+                    <SelectTrigger className="w-20">
+                        <SelectValue>
+                            {table.getState().pagination.pageSize}
+                        </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                        {[5, 10, 15, 20].map((pageSize) => (
+                            <SelectItem
+                                key={pageSize}
+                                value={pageSize.toString()}
+                            >
+                                {pageSize}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
                 <Button
-                    variant="outline"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => table.firstPage()}
+                    disabled={!table.getCanPreviousPage()}
+                >
+                    <ChevronFirst />
+                </Button>
+                <Button
+                    variant="ghost"
                     size="sm"
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
-                    Previous
+                    <ChevronLeft />
                 </Button>
                 <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                 >
-                    Next
+                    <ChevronRight />
+                </Button>
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => table.lastPage()}
+                    disabled={!table.getCanNextPage()}
+                >
+                    <ChevronLast />
                 </Button>
             </div>
         </div>
