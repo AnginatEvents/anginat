@@ -162,6 +162,12 @@ export function DataTable<TData, TValue>({
                         ))}
                     </SelectContent>
                 </Select>
+                <span className="flex items-center gap-1">
+                    <span>
+                        {table.getState().pagination.pageIndex + 1} of{" "}
+                        {table.getPageCount().toLocaleString()}
+                    </span>
+                </span>
                 <Button
                     variant="ghost"
                     size="sm"
