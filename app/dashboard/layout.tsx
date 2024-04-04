@@ -2,6 +2,7 @@ import DashboardTopBar from "@/components/dashboard/DashboardTopBar";
 import Sidenav from "@/components/dashboard/Sidenav";
 import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
     title: "Dashboard | Anginat",
@@ -16,6 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <DashboardTopBar />
                 <Separator />
                 {children}
+                <Toaster />
             </main>
         </div>
     );

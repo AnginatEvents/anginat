@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import AuthProvider from "@/providers/AuthProvider";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/sonner";
 import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
