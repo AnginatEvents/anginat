@@ -5,16 +5,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { TimerReset, Trash2 } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Code } from "@/app/api/db/data";
 
-export type clientSideCode = {
-    code: string;
-    lastCheckedDate: string;
-    lastCheckedTime: string;
-    uploaded: string;
-    checked: number;
-};
-
-export const columns: ColumnDef<clientSideCode>[] = [
+export const columns: ColumnDef<Code>[] = [
     {
         id: "select",
         header: ({ table }) => {
@@ -47,7 +40,7 @@ export const columns: ColumnDef<clientSideCode>[] = [
     },
     {
         // TODO: Format shit here instead of in page
-        accessorKey: "lastCheckedDate",
+        accessorKey: "lastChecked",
         header: ({ column }) => {
             return (
                 <Button
@@ -62,10 +55,15 @@ export const columns: ColumnDef<clientSideCode>[] = [
                 </Button>
             );
         },
+        cell: ({ row }) => {
+            const checkedDate: Date = row.getValue("lastChecked");
+            const checkedDateString = checkedDate.toLocaleDateString("en-GB");
+            return <div className="flex items-center">{checkedDateString}</div>;
+        },
     },
     {
         // TODO: Format shit here instead of in page.tsx
-        accessorKey: "lastCheckedTime",
+        accessorKey: "lastChecked",
         header: ({ column }) => {
             return (
                 <Button
@@ -79,6 +77,11 @@ export const columns: ColumnDef<clientSideCode>[] = [
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
+        },
+        cell: ({ row }) => {
+            const checkedDate: Date = row.getValue("lastChecked");
+            const checkedDateString = checkedDate.toLocaleTimeString("en-GB");
+            return <div className="flex items-center">{checkedDateString}</div>;
         },
     },
     {
@@ -96,6 +99,12 @@ export const columns: ColumnDef<clientSideCode>[] = [
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
+        },
+        cell: ({ row }) => {
+            const uploaded: Date = row.getValue("uploaded");
+            const uploadedDate = uploaded.toLocaleDateString("en-GB");
+
+            return <div className="flex items-center">{uploadedDate}</div>;
         },
     },
     {

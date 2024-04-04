@@ -1,6 +1,6 @@
 import MockData from "./MOCK_DATA.json";
 
-type Code = {
+export type Code = {
     code: string;
     lastChecked: Date;
     uploaded: Date;
