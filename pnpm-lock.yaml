@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@auth/dynamodb-adapter':
-    specifier: ^1.5.0
-    version: 1.5.0(@aws-sdk/client-dynamodb@3.535.0)(@aws-sdk/lib-dynamodb@3.535.0)
   '@auth/firebase-adapter':
     specifier: ^1.5.0
     version: 1.5.0(firebase-admin@11.11.1)
@@ -23,6 +20,9 @@ dependencies:
   '@hookform/resolvers':
     specifier: ^3.3.4
     version: 3.3.4(react-hook-form@7.51.0)
+  '@next-auth/dynamodb-adapter':
+    specifier: ^3.0.2
+    version: 3.0.2(@aws-sdk/client-dynamodb@3.535.0)(@aws-sdk/lib-dynamodb@3.535.0)(next-auth@4.24.7)
   '@radix-ui/react-accordion':
     specifier: ^1.1.2
     version: 1.1.2(@types/react-dom@18.2.22)(@types/react@18.2.66)(react-dom@18.2.0)(react@18.2.0)
@@ -184,21 +184,6 @@ packages:
       oauth4webapi: 2.10.3
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
-    dev: false
-
-  /@auth/dynamodb-adapter@1.5.0(@aws-sdk/client-dynamodb@3.535.0)(@aws-sdk/lib-dynamodb@3.535.0):
-    resolution: {integrity: sha512-ek1AphhpQ00L988ga3ialw40oY748Q5prVmrM51kEtFNtir6n4hx45ENGkR0uGBbogcOjO8WxDkvNfPJ1wym/w==}
-    peerDependencies:
-      '@aws-sdk/client-dynamodb': ^3.36.1
-      '@aws-sdk/lib-dynamodb': ^3.36.1
-    dependencies:
-      '@auth/core': 0.28.0
-      '@aws-sdk/client-dynamodb': 3.535.0(aws-crt@1.21.1)
-      '@aws-sdk/lib-dynamodb': 3.535.0(@aws-sdk/client-dynamodb@3.535.0)
-    transitivePeerDependencies:
-      - '@simplewebauthn/browser'
-      - '@simplewebauthn/server'
-      - nodemailer
     dev: false
 
   /@auth/firebase-adapter@1.5.0(firebase-admin@11.11.1):
@@ -1532,6 +1517,19 @@ packages:
       lodash: 4.17.21
     dev: false
     optional: true
+
+  /@next-auth/dynamodb-adapter@3.0.2(@aws-sdk/client-dynamodb@3.535.0)(@aws-sdk/lib-dynamodb@3.535.0)(next-auth@4.24.7):
+    resolution: {integrity: sha512-hCj8RYyHZc6SwZs7FkOV56/jcok4GLdQ2oIun/no9+0vrpdMhGzRM4qQCoRNq3BnZot/C/6ILWSxMXzsEznlgA==}
+    peerDependencies:
+      '@aws-sdk/client-dynamodb': ^3.36.1
+      '@aws-sdk/lib-dynamodb': ^3.36.1
+      next-auth: ^4
+    dependencies:
+      '@aws-sdk/client-dynamodb': 3.535.0(aws-crt@1.21.1)
+      '@aws-sdk/lib-dynamodb': 3.535.0(@aws-sdk/client-dynamodb@3.535.0)
+      next-auth: 4.24.7(next@14.1.3)(react-dom@18.2.0)(react@18.2.0)
+      uuid: 9.0.1
+    dev: false
 
   /@next/env@14.1.3:
     resolution: {integrity: sha512-VhgXTvrgeBRxNPjyfBsDIMvgsKDxjlpw4IAUsHCX8Gjl1vtHUYRT3+xfQ/wwvLPDd/6kqfLqk9Pt4+7gysuCKQ==}

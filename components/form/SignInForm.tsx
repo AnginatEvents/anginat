@@ -22,10 +22,7 @@ import { redirect } from "next/navigation";
 
 const formSchema = z.object({
     email: z.string().email(),
-    password: z
-        .string()
-        .min(1, { message: "Password is required" })
-        .min(6, { message: "Password needs to be atleast 6 characters long" }),
+    password: z.string().min(1, { message: "Password is required" }),
 });
 
 const SignInForm = () => {
