@@ -5,7 +5,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { GoogleButton } from "@/components/ui/google-button";
-import { useSession } from "next-auth/react";
+import { login } from "@/actions/login";
+import { useTransition } from "react";
 
 // Form components
 import {
@@ -18,23 +19,22 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link.js";
+import { loginSchema } from "@/schemas/loginSchema";
 import { redirect } from "next/navigation";
 
-const formSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(1, { message: "Password is required" }),
-});
-
 const SignInForm = () => {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof loginSchema>>({
+        resolver: zodResolver(loginSchema),
         defaultValues: {
             email: "",
             password: "",
         },
     });
-    function onSubmit(data: z.infer<typeof formSchema>) {
-        console.log(data);
+    const [pending, startTransition] = useTransition();
+    function onSubmit(data: z.infer<typeof loginSchema>) {
+        startTransition(() => {
+            login(data);
+        });
     }
 
     return (
@@ -46,7 +46,11 @@ const SignInForm = () => {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input placeholder="Email" {...field} />
+                                <Input
+                                    disabled={pending}
+                                    placeholder="Email"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -59,6 +63,7 @@ const SignInForm = () => {
                         <FormItem>
                             <FormControl>
                                 <Input
+                                    disabled={pending}
                                     type="password"
                                     placeholder="Password"
                                     {...field}
@@ -73,6 +78,7 @@ const SignInForm = () => {
                         type="submit"
                         variant="default"
                         className="w-full self-stretch"
+                        disabled={pending}
                     >
                         Sign In
                     </Button>
