@@ -30,10 +30,17 @@ const SignInForm = () => {
             password: "",
         },
     });
+
     const [pending, startTransition] = useTransition();
-    function onSubmit(data: z.infer<typeof loginSchema>) {
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
+
+    function onSubmit(values: z.infer<typeof loginSchema>) {
         startTransition(() => {
-            login(data);
+            login(values).then((data) => {
+                setSuccess(data.success);
+                setError(data.error);
+            });
         });
     }
 
