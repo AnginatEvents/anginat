@@ -95,6 +95,12 @@ const SignInForm = () => {
             <div className="pt-4">
                 <GoogleButton />
             </div>
+            <div className="pt-3">
+                Don&apos;t have an account?{" "}
+                <Button className="px-1 font-semibold" variant="link" asChild>
+                    <Link href="/sign-up">Sign Up</Link>
+                </Button>
+            </div>
         </Form>
     );
 };
