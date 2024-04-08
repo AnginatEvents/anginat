@@ -14,27 +14,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link.js";
-import { isValidPhoneNumber } from "react-phone-number-input";
 import { PhoneInput } from "@/components/ui/phone-input";
-
-const formSchema = z.object({
-    name: z.string(),
-    email: z.string().email(),
-    password: z
-        .string()
-        .min(6, { message: "Password needs to be atleast 6 characters long" }),
-    phone: z
-        .string()
-        .refine(isValidPhoneNumber, { message: "Invalid phone number" }),
-});
+import { signupSchema } from "@/schemas/signupSchema";
 
 interface SignUpProps {
     className?: string;
 }
 
 const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof signupSchema>>({
+        resolver: zodResolver(signupSchema),
         defaultValues: {
             name: "",
             email: "",
@@ -43,7 +32,7 @@ const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
         },
     });
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
+    const onSubmit = (values: z.infer<typeof signupSchema>) => {
         console.log("Attempting to sign in with", values);
     };
 
