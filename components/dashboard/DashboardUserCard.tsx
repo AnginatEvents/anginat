@@ -28,6 +28,7 @@ const DashboardUserCard = () => {
     //             name: "John Doe",
     //             email: "jdoe23@gmail.com",
     //             image: "https://lh3.googleusercontent.com/a/ACg8ocJz3yKkp6O-4z4gePUozA9Og0FGu-HE3OU7T9EjBbP4Rw=s96-c",
+    //             role: "basic"
     //         },
     //         expires: "2024-04-30T12:20:07.983Z",
     //     },
@@ -38,7 +39,7 @@ const DashboardUserCard = () => {
     return session.status === "loading" ? (
         <SkeletonDemo />
     ) : (
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 px-9">
             <Avatar>
                 <AvatarImage
                     // intentionally throws error here sometimes
@@ -49,8 +50,8 @@ const DashboardUserCard = () => {
             </Avatar>
             <div className="space-y-0.5">
                 <div className="text-lg">{session.data?.user?.name}</div>
-                <p className="text-s pb-1.5 text-gray-500">
-                    {session.data?.user?.email}
+                <p className="text-s pb-1.5 capitalize text-gray-500">
+                    {session.data?.user?.role ?? "Basic"}
                 </p>
             </div>
         </div>
