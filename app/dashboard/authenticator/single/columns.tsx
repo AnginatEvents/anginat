@@ -5,9 +5,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { TimerReset, Trash2 } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Code } from "@/app/api/db/data";
+import { SingleCode } from "@/app/api/db/data";
 
-export const columns: ColumnDef<Code>[] = [
+export const columns: ColumnDef<SingleCode>[] = [
     {
         id: "select",
         header: ({ table }) => {

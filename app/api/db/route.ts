@@ -1,7 +1,12 @@
+import { NextRequest } from "next/server";
 import { getCodes } from "./data";
 
-export async function GET(req: Request) {
-    const res = await getCodes();
-    const data = JSON.stringify(res);
-    return Response.json(data);
+export async function GET(req: NextRequest) {
+    const requestHeaders = new Headers(req.headers);
+
+    const codeType = requestHeaders.get("type");
+    console.info(`Request for code type: ${codeType}`);
+
+    const res = await getCodes(codeType);
+    return Response.json(res);
 }

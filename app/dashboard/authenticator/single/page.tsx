@@ -1,9 +1,9 @@
 import { DataTable } from "@/components/dashboard/data-table";
-import { getCodes } from "@/app/api/db/data";
+import { SingleCode, getCodes } from "@/app/api/db/data";
 import { columns } from "./columns";
 
 export default async function Page() {
-    const rawData = await getCodes();
+    const rawData = (await getCodes("single")) as SingleCode[];
 
     return (
         <div className="">

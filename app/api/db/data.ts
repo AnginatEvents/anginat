@@ -1,19 +1,51 @@
-import MockData from "./MOCK_DATA.json";
+import SingleMockData from "./MOCK_DATA.json";
+import DualMockData from "./MOCK_DATA_DUAL.json";
 
-export type Code = {
+export type SingleCode = {
     code: string;
     lastChecked: Date;
     uploaded: Date;
     checked: number;
 };
 
-export const data: Code[] = MockData.map((item: any) => ({
+export type DualCode = {
+    primaryCode: string;
+    secondaryCode: string;
+    lastChecked: Date;
+    uploaded: Date;
+    checked: number;
+};
+
+export const singleData: SingleCode[] = SingleMockData.map((item: any) => ({
     code: item.code,
     lastChecked: new Date(item.lastChecked),
     uploaded: new Date(item.uploaded),
     checked: item.checked,
 }));
 
-export const getCodes = async () => {
-    return data;
+export const dualData: DualCode[] = DualMockData.map((item: any) => ({
+    primaryCode: item.primaryCode,
+    secondaryCode: item.secondaryCode,
+    lastChecked: new Date(item.lastChecked),
+    uploaded: new Date(item.uploaded),
+    checked: item.checked,
+}));
+
+// export const dualData: DualCode[] = DualMockData.map((item: any) => ({
+//     primaryCode: item.primaryCode,
+//     secondaryCode: item.secondaryCode,
+//     lastChecked: new Date(item.lastChecked),
+//     uploaded: new Date(item.uploaded),
+//     checked: item.checked,
+// }));
+
+export const getCodes = async (type: string | null) => {
+    switch (type) {
+        case "single":
+            return singleData;
+        case "dual":
+            return dualData;
+        default:
+            return [];
+    }
 };
