@@ -112,7 +112,7 @@ const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
                             variant="default"
                             className="w-full self-stretch"
                         >
-                            Sign In
+                            Sign Up
                         </Button>
                     </div>
                     <div className="pr-3 text-right">
