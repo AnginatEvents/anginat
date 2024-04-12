@@ -68,7 +68,7 @@ export const columns: ColumnDef<DualCode>[] = [
             );
         },
         cell: ({ row }) => {
-            const checkedDate: Date = row.getValue("lastChecked");
+            const checkedDate = row.original.lastChecked;
             const checkedDateString = checkedDate.toLocaleDateString("en-GB");
             return <div className="flex items-center">{checkedDateString}</div>;
         },

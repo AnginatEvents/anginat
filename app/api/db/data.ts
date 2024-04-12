@@ -27,8 +27,8 @@ export const dualData: DualCode[] = DualMockData.map((item: any) => ({
     primaryCode: item.primaryCode,
     secondaryCode: item.secondaryCode,
     lastChecked: new Date(item.lastChecked),
-    uploaded: new Date(item.uploaded),
-    checked: item.checked,
+    uploaded: new Date(item.uploadedDate),
+    checked: item.accessed,
 }));
 
 // export const dualData: DualCode[] = DualMockData.map((item: any) => ({
