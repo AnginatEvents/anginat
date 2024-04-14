@@ -44,6 +44,7 @@ import {
     Trash2,
     Upload,
 } from "lucide-react";
+import FileUploadDialog from "@/components/dashboard/FileUploadDialog";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -129,9 +130,14 @@ export function DataTable<TData, TValue>({
                     <Button variant="outline" className="mr-0 rounded-none">
                         <Upload className="text-red-400" /> Export
                     </Button>
-                    <Button variant="outline" className="mr-1.5 rounded-none">
-                        <Download className="text-green-400" /> Import
-                    </Button>
+                    <FileUploadDialog>
+                        <Button
+                            variant="outline"
+                            className="mr-1.5 rounded-none"
+                        >
+                            <Download className="text-green-400" /> Import
+                        </Button>
+                    </FileUploadDialog>
                     <Button className="rounded-sm">
                         <Eye /> User Demo
                     </Button>
