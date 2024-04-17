@@ -11,7 +11,13 @@ import {
 import { ReactNode } from "react";
 import FileDropzone from "../Dropzone";
 
-const FileUploadDialog = ({ children }: { children: ReactNode }) => {
+const FileUploadDialog = ({
+    children,
+    uploadApiUrl,
+}: {
+    children: ReactNode;
+    uploadApiUrl?: string;
+}) => {
     return (
         <Dialog>
             <DialogTrigger asChild>{children}</DialogTrigger>
@@ -30,7 +36,7 @@ const FileUploadDialog = ({ children }: { children: ReactNode }) => {
                     //content
                     // <Input className="h-[300px]" type="file" />
                 }
-                <FileDropzone />
+                <FileDropzone uploadApiUrl={uploadApiUrl} />
             </DialogContent>
         </Dialog>
     );

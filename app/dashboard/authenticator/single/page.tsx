@@ -7,7 +7,11 @@ export default async function Page() {
 
     return (
         <div className="">
-            <DataTable columns={columns} data={rawData} />
+            <DataTable
+                columns={columns}
+                uploadApiUrl="/api/upload-csv/single"
+                data={rawData}
+            />
         </div>
     );
 }

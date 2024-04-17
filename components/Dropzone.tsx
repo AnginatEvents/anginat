@@ -6,7 +6,11 @@ import { Button } from "./ui/button";
 import { DialogFooter } from "./ui/dialog";
 import { toast } from "sonner";
 
-const Dropzone: React.FC = () => {
+interface DropzoneProps {
+    uploadApiUrl?: string;
+}
+
+const Dropzone: React.FC<DropzoneProps> = ({ uploadApiUrl }) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isUploading, setIsUploading] = useState(false);
 
@@ -29,13 +33,33 @@ const Dropzone: React.FC = () => {
 
             try {
                 // Send formData to your API endpoint
-                const response = await axios.post(
-                    "/api/upload-csv/single",
-                    formData,
-                );
-
+                if (!uploadApiUrl) {
+                    toast.info(
+                        "Uploading has not been implemented for this page yet.",
+                    );
+                } else {
+                    toast.info("Uploading file...");
+                    await axios
+                        .post(uploadApiUrl, formData, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            },
+                        })
+                        .then((res) => {
+                            console.log(
+                                "File uploaded successfully:",
+                                res.data,
+                            );
+                            if (res.status === 200) {
+                                toast.success("File uploaded successfully");
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error uploading file:", error);
+                            toast.error("Error uploading file");
+                        });
+                }
                 // Handle response (e.g., show success message)
-                console.log("File uploaded successfully:", response.data);
             } catch (error) {
                 console.error("Error uploading file:", error);
                 // Handle error (e.g., display error message)

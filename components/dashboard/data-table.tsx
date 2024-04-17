@@ -49,11 +49,13 @@ import FileUploadDialog from "@/components/dashboard/FileUploadDialog";
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    uploadApiUrl?: string;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    uploadApiUrl,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -130,7 +132,7 @@ export function DataTable<TData, TValue>({
                     <Button variant="outline" className="mr-0 rounded-none">
                         <Upload className="text-red-400" /> Export
                     </Button>
-                    <FileUploadDialog>
+                    <FileUploadDialog uploadApiUrl={uploadApiUrl}>
                         <Button
                             variant="outline"
                             className="mr-1.5 rounded-none"
