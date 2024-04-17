@@ -77,9 +77,9 @@ dependencies:
   cmdk:
     specifier: ^1.0.0
     version: 1.0.0(@types/react-dom@18.2.22)(@types/react@18.2.66)(react-dom@18.2.0)(react@18.2.0)
-  dynamoose:
-    specifier: ^4.0.0
-    version: 4.0.0(aws-crt@1.21.1)
+  csv-parse:
+    specifier: ^5.5.5
+    version: 5.5.5
   firebase:
     specifier: ^10.9.0
     version: 10.9.0
@@ -130,6 +130,9 @@ devDependencies:
   '@types/node':
     specifier: ^20
     version: 20.11.28
+  '@types/papaparse':
+    specifier: ^5.3.14
+    version: 5.3.14
   '@types/react':
     specifier: ^18
     version: 18.2.66
@@ -2958,6 +2961,12 @@ packages:
     dependencies:
       undici-types: 5.26.5
 
+  /@types/papaparse@5.3.14:
+    resolution: {integrity: sha512-LxJ4iEFcpqc6METwp9f6BV6VVc43m6MfH0VqFosHvrUgfXiFe6ww7R3itkOQ+TCK6Y+Iv/+RnnvtRZnkc5Kc9g==}
+    dependencies:
+      '@types/node': 20.11.28
+    dev: true
+
   /@types/prop-types@15.7.11:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
 
@@ -3679,6 +3688,10 @@ packages:
   /csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
+  /csv-parse@5.5.5:
+    resolution: {integrity: sha512-erCk7tyU3yLWAhk6wvKxnyPtftuy/6Ak622gOO7BCJ05+TYffnPCJF905wmOQm+BpkX54OdAl8pveJwUdpnCXQ==}
+    dev: false
+
   /damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
     dev: true
@@ -3811,23 +3824,6 @@ packages:
       inherits: 2.0.4
       readable-stream: 3.6.2
       stream-shift: 1.0.3
-    dev: false
-
-  /dynamoose-utils@4.0.0:
-    resolution: {integrity: sha512-jyuV7xsk8Xj/FcIBB8+pRwjroORhM9HKBbytzrwO6qYK9SurzXdNyzxkSPS4r5XB5rULGe+c9cPJuVZ00GgtBg==}
-    dependencies:
-      js-object-utilities: 2.2.0
-    dev: false
-
-  /dynamoose@4.0.0(aws-crt@1.21.1):
-    resolution: {integrity: sha512-o7t+ny/vpLjRBehyyu6oD9RJfnInwuTMCBlBtIIgYE2NfawsDLIhZZXl1qRXmTa+qsfiJD2agCRo/U1Vfng7gQ==}
-    dependencies:
-      '@aws-sdk/client-dynamodb': 3.535.0(aws-crt@1.21.1)
-      '@aws-sdk/util-dynamodb': 3.535.0(@aws-sdk/client-dynamodb@3.535.0)
-      dynamoose-utils: 4.0.0
-      js-object-utilities: 2.2.0
-    transitivePeerDependencies:
-      - aws-crt
     dev: false
 
   /eastasianwidth@0.2.0:
@@ -5164,10 +5160,6 @@ packages:
 
   /jose@5.2.3:
     resolution: {integrity: sha512-KUXdbctm1uHVL8BYhnyHkgp3zDX5KW8ZhAKVFEfUbU2P8Alpzjb+48hHvjOdQIyPshoblhzsuqOwEEAbtHVirA==}
-    dev: false
-
-  /js-object-utilities@2.2.0:
-    resolution: {integrity: sha512-gVw7FwD6r7mNNjzSKJ74uxvqNIGu7hb67K+Xvwus9JRBTWLezxcg77cCFOmTbiToV09BqdYmIJ+zfL3UiWDtpQ==}
     dev: false
 
   /js-sdsl@4.3.0:
