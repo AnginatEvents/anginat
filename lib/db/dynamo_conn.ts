@@ -1,14 +1,16 @@
 import {
     DynamoDBClient,
+    DynamoDB,
     GetItemCommand,
+    BatchWriteItemCommand,
     PutItemCommand,
     UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
-import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { generatePassword, isValidPassword } from "@/lib/auth/password_utils";
+import { CSVRowItem } from "@/app/api/upload-csv/single/route";
 
 export const db = new DynamoDBClient({
-    region: "us-west-2",
+    region: "us-east-1",
     credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,

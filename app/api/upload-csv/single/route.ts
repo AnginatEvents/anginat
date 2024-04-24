@@ -11,8 +11,9 @@ import { marshall } from "@aws-sdk/util-dynamodb";
 
 export interface CSVRowItem {
     pk: string;
-    [key: string]: string;
+    code: string;
     uploadedOn: string;
+    checked: number;
 }
 
 export async function POST(req: NextRequest) {
@@ -71,7 +72,8 @@ async function handleCSVandPushToDb(id: string, file: File) {
         const item: CSVRowItem = {
             pk: `USER#${id}`,
             uploadedOn: new Date().toISOString(),
-            ...record,
+            checked: 0,
+            code: record.code,
         };
         // for (let i = 0; i < record.length; i++) {
         //     item[`column${i}`] = record[i];
