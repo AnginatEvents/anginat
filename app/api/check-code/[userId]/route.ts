@@ -3,6 +3,8 @@ import {
     DynamoDBClient,
     GetItemCommand,
     GetItemCommandOutput,
+    UpdateItemInput,
+    UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { db } from "@/lib/db/dynamo_conn";
@@ -50,6 +52,10 @@ async function getItemFromUserAndCode(userId: string, code: string) {
             console.log("Item successfully retrieved from Dynamo db");
             // console.log(dbResponse);
             // console.log(dbResponse.Item);
+            const existingItem = dbResponse.Item;
+
+            updateItemWithUserIdAndCode(userId, code);
+
             return unmarshall(dbResponse.Item);
         } else {
             console.log("No item found in Dynamo db");
@@ -58,4 +64,23 @@ async function getItemFromUserAndCode(userId: string, code: string) {
     } catch (error) {
         console.error(error);
     }
+}
+
+async function updateItemWithUserIdAndCode(userId: string, code: string) {
+    const updateItemParams: UpdateItemInput = {
+        TableName: "user-codes-single",
+        Key: { pk: { S: `USER#${userId}` }, code: { S: code } },
+        UpdateExpression: "SET #checked = #checked + :increment",
+        ExpressionAttributeNames: {
+            "#checked": "checked",
+        },
+        ExpressionAttributeValues: {
+            ":increment": { N: "1" },
+        },
+        ReturnValues: "ALL_NEW",
+    };
+    const updateResponse = await db.send(
+        new UpdateItemCommand(updateItemParams),
+    );
+    console.log(updateResponse);
 }
