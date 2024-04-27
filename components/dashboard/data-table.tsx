@@ -45,17 +45,20 @@ import {
     Upload,
 } from "lucide-react";
 import FileUploadDialog from "@/components/dashboard/FileUploadDialog";
+import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
     uploadApiUrl?: string;
+    demoUrl?: string;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
     uploadApiUrl,
+    demoUrl,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -140,8 +143,10 @@ export function DataTable<TData, TValue>({
                             <Download className="text-green-400" /> Import
                         </Button>
                     </FileUploadDialog>
-                    <Button className="rounded-sm">
-                        <Eye /> User Demo
+                    <Button className="rounded-sm" asChild>
+                        <Link href={demoUrl || ""}>
+                            <Eye /> User Demo
+                        </Link>
                     </Button>
                 </div>
             </div>

@@ -10,6 +10,7 @@ export default async function Page() {
             <DataTable
                 columns={columns}
                 uploadApiUrl="/api/upload-csv/single"
+                demoUrl="/dashboard/demo/single"
                 data={rawData}
             />
         </div>
