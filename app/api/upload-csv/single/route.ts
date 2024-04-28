@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
             );
         }
     } catch (e) {
-        console.error("Failed to parse the CSV", e);
+        console.error("Failed to upload the CSV", e);
         return NextResponse.json(
             { error: "Something went wrong" },
             { status: 500 },
@@ -54,21 +54,32 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ session }, { status: 200 });
 }
 
-async function handleCSVandPushToDb(id: string, file: File) {
-    const stream = Readable.from(file.stream());
-    const parser = stream.pipe(
-        parse({
-            delimiter: ",",
-            columns: true,
-            skipEmptyLines: true,
-            recordDelimiter: "\n",
-        }),
-    );
+function readCSV(file: File) {
+    try {
+        const stream = Readable.from(file.stream());
+        const parser = stream.pipe(
+            parse({
+                delimiter: ",",
+                columns: true,
+                skipEmptyLines: true,
+                recordDelimiter: "\n",
+                trim: true,
+            }),
+        );
+        return parser;
+    } catch (error) {
+        console.log("Error reading CSV file", error);
+        throw error;
+    }
+}
 
+async function handleCSVandPushToDb(id: string, file: File) {
+    const parser = readCSV(file);
     const batchItems: WriteRequest[] = [];
     let rowCount = 0;
 
     for await (const record of parser) {
+        console.log("Record", record);
         const item: CSVRowItem = {
             pk: `USER#${id}`,
             uploadedOn: new Date().toISOString(),
