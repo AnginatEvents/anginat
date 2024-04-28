@@ -24,6 +24,16 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ session: "Not Logged In" }, { status: 401 });
     }
 
+    if (!session.user.id) {
+        return NextResponse.json(
+            {
+                session:
+                    "No user id found in the session, please try to SignOut and Sign back in",
+            },
+            { status: 401 },
+        );
+    }
+
     const file = formData.get("file");
     if (!file || !(file instanceof File)) {
         return NextResponse.json(
