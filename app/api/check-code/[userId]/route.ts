@@ -18,7 +18,7 @@ export async function POST(
 
     // const code = "00OQMXHALXF7";
 
-    console.log(params);
+    console.log("Received request for: ", { ...params, code });
     if (!code || typeof code !== "string") {
         return NextResponse.json(
             { error: "No code provided" },
@@ -58,7 +58,7 @@ async function getItemFromUserAndCode(userId: string, code: string) {
 
             return unmarshall(dbResponse.Item);
         } else {
-            console.log("No item found in Dynamo db");
+            console.log("No item found in Dynamo db for: ", { userId, code });
             console.log(dbResponse);
         }
     } catch (error) {
