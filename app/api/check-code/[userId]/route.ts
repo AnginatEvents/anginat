@@ -7,7 +7,7 @@ import {
     UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
-import { db } from "@/lib/db/dynamo_conn";
+import { db } from "@/lib/db/db";
 
 export async function POST(
     req: NextRequest,

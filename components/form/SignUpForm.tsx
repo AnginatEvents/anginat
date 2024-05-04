@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link.js";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { signupSchema } from "@/schemas/signupSchema";
+import { createUser } from "@/lib/db/dynamo_conn";
+import { useRouter } from "next/navigation";
 
 interface SignUpProps {
     className?: string;
@@ -31,9 +33,19 @@ const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
             phone: "",
         },
     });
+    const router = useRouter();
 
-    const onSubmit = (values: z.infer<typeof signupSchema>) => {
-        console.log("Attempting to sign in with", values);
+    const onSubmit = async (values: z.infer<typeof signupSchema>) => {
+        console.log("Attempting to sign up with", values);
+        const success = await createUser({
+            email: values.email,
+            name: values.name,
+            phone: values.phone,
+            password: values.password,
+        });
+        if (success) {
+            router.push("/sign-in");
+        }
     };
 
     return (

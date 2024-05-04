@@ -5,7 +5,7 @@ import { options } from "@/app/api/auth/[...nextauth]/options";
 import { File } from "buffer";
 import { Readable } from "stream";
 import { parse } from "csv-parse";
-import { db } from "@/lib/db/dynamo_conn";
+import { db } from "@/lib/db/db";
 import { BatchWriteItemCommand, WriteRequest } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 
