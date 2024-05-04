@@ -27,7 +27,7 @@ const FileUploadDialog = ({
                     <DialogDescription>
                         You can use Google Sheets or Microsoft Excel to generate
                         a csv file (.csv or .csv utf-8). Make sure the
-                        Verification Code has the header "code" in all
+                        Verification Code has the header &quot;code&quot; in all
                         lowercase&nbsp;
                         <a
                             className="text-blue-500 underline"
