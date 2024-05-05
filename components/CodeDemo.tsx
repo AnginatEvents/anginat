@@ -25,7 +25,7 @@ const CodeDemo = () => {
 
     function onSumbit() {
         // cant be bothered setting up zod here ResidentSleeper
-        setCode(code.trim())
+        setCode(code.trim());
         if (code === "") {
             return;
         }
