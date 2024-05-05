@@ -11,6 +11,6 @@ declare module "next-auth" {
         } & DefaultSession["basic"];
     }
     interface User extends DefaultUser {
-        role: "basic" | "premium" | "admin" | undefined | null;
+        role?: "basic" | "premium" | "admin" | undefined | null;
     }
 }

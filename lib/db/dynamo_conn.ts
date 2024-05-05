@@ -3,6 +3,7 @@
 import {
     GetItemCommand,
     PutItemCommand,
+    QueryCommand,
     UpdateItemCommand,
     UpdateItemCommandInput,
 } from "@aws-sdk/client-dynamodb";
@@ -10,6 +11,7 @@ import { v4 as uuid } from "uuid";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { generatePassword, isValidPassword } from "@/lib/auth/password_utils";
 import { db } from "./db";
+import { QueryCommandInput } from "@aws-sdk/lib-dynamodb";
 
 export const createUser = async ({
     email,
@@ -22,6 +24,16 @@ export const createUser = async ({
     phone: string;
     name: string;
 }) => {
+    try {
+        const userExists = await getUserByEmail(email);
+        if (userExists) {
+            console.log("CreateUser: User already exists in Dynamo db");
+            return { success: false, message: "Email already exists" };
+        }
+    } catch (error) {
+        console.error("CreateUser: Error fetching user by email", error);
+        return { success: true, message: "Error fetching user by email" };
+    }
     const userId = uuid();
     let newSaltHash = generatePassword(password);
 
@@ -34,12 +46,13 @@ export const createUser = async ({
             salt: { S: newSaltHash.salt },
             hashstring: { S: newSaltHash.hashstring },
             role: { S: "basic" },
+            firstName: { S: name.split(" ")[0] },
             // Internal details for the table
             type: { S: "USER" },
             pk: { S: `USER#${userId}` },
             sk: { S: `USER#${userId}` },
-            GSI1PK: { S: `USER#${userId}` },
-            GSI1SK: { S: `USER#${userId}` },
+            GSI1PK: { S: `USER#${email}` },
+            GSI1SK: { S: `USER#${email}` },
             provider: { S: "credentials" },
         },
     };
@@ -53,56 +66,96 @@ export const createUser = async ({
             putitemResponse.$metadata.httpStatusCode === 200
         ) {
             console.log("CreateUser: Item successfully added to Dynamo db");
-            return true;
+            return { success: true, message: "User created successfully" };
         } else {
             console.log("CreateUser: Unexpected response from Dynamo db");
-            return false;
+            return { success: false, message: "Error creating user" };
         }
     } catch (error) {
         console.error("CreateUser: Error creating new user in DynamoDB", error);
-        throw error;
+        return { success: false, message: "Error creating user" };
     }
 };
 
-export const verifyUser = async (username: string, password: string) => {
-    let params = {
+export const getUserByEmail = async (email: string) => {
+    const params: QueryCommandInput = {
         TableName: "user-auth",
-        Key: {
-            username: { S: username.toString() },
+        IndexName: "GSI1",
+        KeyConditionExpression: "#gsi1pk = :gsi1pk AND #gsi1sk = :gsi1sk",
+        ExpressionAttributeNames: {
+            "#gsi1pk": "GSI1PK",
+            "#gsi1sk": "GSI1SK",
+        },
+        ExpressionAttributeValues: {
+            ":gsi1pk": { S: `USER#${email}` },
+            ":gsi1sk": { S: `USER#${email}` },
         },
     };
-
     try {
-        const getItemCommand = new GetItemCommand(params);
-        const dbResponse = await db.send(getItemCommand);
-
-        if (!dbResponse || !dbResponse.Item) {
+        const command = new QueryCommand(params);
+        const dbResponse = await db.send(command);
+        if (!dbResponse.Count) {
             console.log(
-                "VerifyUser: No item found in Dynamo db for:  ",
-                username,
+                "GetUserByEmail: No item found in Dynamo db for:  ",
+                email,
             );
             return null;
         }
-        // Return the item if it exists
-        console.log("VerifyUser: Item successfully retrieved from Dynamo db");
-        const userdata = unmarshall(dbResponse.Item);
-        const isValid = isValidPassword(
-            password,
-            userdata.hashstring,
-            userdata.salt,
+        console.log("GetUserByEmail: ");
+        const data = unmarshall(dbResponse.Items![0]);
+        console.log(
+            "GetUserByEmail: Item successfully retrieved from Dynamo db: ",
+            { data },
         );
-        return isValid;
-    } catch (error) {
-        console.error("VerifyUser: Error fetching item from Dynamo db", error);
-        throw error;
+        return data;
+    } catch (e) {
+        console.error("GetUserByEmail: Error fetching user by email", e);
+        throw new Error("Error fetching user by email");
     }
 };
 
-export const updateUser = async (username: string, rolename: string) => {
+// export const verifyUser = async (email: string, password: string) => {
+//     let params = {
+//         TableName: "user-auth",
+//         Key: {
+//             email: { S: email.toString() },
+//         },
+//     };
+
+//     try {
+//         const getItemCommand = new GetItemCommand(params);
+//         const dbResponse = await db.send(getItemCommand);
+
+//         if (!dbResponse || !dbResponse.Item) {
+//             console.log("VerifyUser: No item found in Dynamo db for:  ", email);
+//             return null;
+//         }
+//         // Return the item if it exists
+//         console.log("VerifyUser: Item successfully retrieved from Dynamo db");
+//         const userdata = unmarshall(dbResponse.Item);
+//         const isValid = isValidPassword(
+//             password,
+//             userdata.hashstring,
+//             userdata.salt,
+//         );
+//         if (isValid) {
+//             console.log("VerifyUser: User verified successfully");
+//             console.log("Userdata: ", userdata);
+//             return userdata;
+//         }
+//         console.log("VerifyUser: User verification failed");
+//         return null;
+//     } catch (error) {
+//         console.error("VerifyUser: Error fetching item from Dynamo db", error);
+//         return null;
+//     }
+// };
+
+export const updateUser = async (email: string, rolename: string) => {
     let params: UpdateItemCommandInput = {
         TableName: "user_auth",
         Key: {
-            username: { S: username.toString() },
+            email: { S: email.toString() },
         },
         UpdateExpression: "SET rolename = :rolevalue",
         ExpressionAttributeValues: {
@@ -135,7 +188,7 @@ export const updateUser = async (username: string, rolename: string) => {
 //     let params = {
 //         TableName: "users-auth",
 //         Key: {
-//             username: { S: email },
+//             email: { S: email },
 //         },
 //     };
 

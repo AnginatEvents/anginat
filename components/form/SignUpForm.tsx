@@ -18,12 +18,14 @@ import { PhoneInput } from "@/components/ui/phone-input";
 import { signupSchema } from "@/schemas/signupSchema";
 import { createUser } from "@/lib/db/dynamo_conn";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface SignUpProps {
     className?: string;
 }
 
 const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
+    const [signUpMessage, setSignUpMessage] = useState<signUpResponses>("");
     const form = useForm<z.infer<typeof signupSchema>>({
         resolver: zodResolver(signupSchema),
         defaultValues: {
@@ -37,14 +39,26 @@ const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
 
     const onSubmit = async (values: z.infer<typeof signupSchema>) => {
         console.log("Attempting to sign up with", values);
-        const success = await createUser({
+        const response = await createUser({
             email: values.email,
             name: values.name,
             phone: values.phone,
             password: values.password,
         });
-        if (success) {
-            router.push("/sign-in");
+        if (response.success) {
+            setSignUpMessage("Successfully Logged In");
+            setTimeout(() => {
+                router.push("/sign-in");
+            });
+        } else {
+            if ((response.message = "Email already exists")) {
+                setSignUpMessage("Email Already Exists");
+                setTimeout(() => {
+                    router.push("/sign-in");
+                });
+            } else {
+                setSignUpMessage("Failed to create profile");
+            }
         }
     };
 
@@ -68,7 +82,6 @@ const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
                                         {...field}
                                     />
                                 </FormControl>
-                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -118,6 +131,7 @@ const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
                             </FormItem>
                         )}
                     />
+                    <SignUpResponse message={signUpMessage} />
                     <div>
                         <Button
                             type="submit"
@@ -137,6 +151,37 @@ const SignUpForm: React.FC<SignUpProps> = ({ className }) => {
             </Form>
         </div>
     );
+};
+
+type signUpResponses =
+    | "Successfully Logged In"
+    | "Email Already Exists"
+    | "Failed to create profile"
+    | "";
+
+const SignUpResponse = ({ message }: { message: signUpResponses }) => {
+    switch (message) {
+        case "Successfully Logged In":
+            return (
+                <div className="h-8 rounded-md bg-green-100 py-1 text-center text-green-600">
+                    {message}
+                </div>
+            );
+        case "Email Already Exists":
+            return (
+                <div className="h-8 rounded-md bg-yellow-100 py-1 text-center text-yellow-600">
+                    {message}
+                </div>
+            );
+        case "Failed to create profile":
+            return (
+                <div className="h-8 rounded-md bg-red-100 py-1 text-center text-red-600">
+                    {message}
+                </div>
+            );
+        default:
+            return <div></div>;
+    }
 };
 
 export default SignUpForm;
