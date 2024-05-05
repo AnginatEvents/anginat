@@ -4,6 +4,7 @@ import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { DynamoDBAdapter } from "@next-auth/dynamodb-adapter";
+import { verifyUser } from "@/lib/db/dynamo_conn";
 
 const dynamoConfig: DynamoDBClientConfig = {
     credentials: {
@@ -44,39 +45,35 @@ export const options: NextAuthOptions = {
                 return roleProfile;
             },
         }),
-        // CredentialsProvider({
-        //     name: "Credentials",
-        //     credentials: {
-        //         username: {
-        //             label: "Username:",
-        //             type: "text",
-        //             placeholder: "Your Username",
-        //         },
-        //         password: {
-        //             label: "Password:",
-        //             type: "password",
-        //             placeholder: "Your Password",
-        //         },
-        //     },
-        //     async authorize(credentials) {
-        //         // TODO: Replace this with a real database call
-        //         // Docs: https://next-auth.js.org/configuration/providers/credentials
-        //         const user = {
-        //             id: "42",
-        //             name: "jdoe23@email.com",
-        //             password: "anginat@password",
-        //         };
-
-        //         if (
-        //             credentials?.username === user.name &&
-        //             credentials?.password === user.password
-        //         ) {
-        //             return user;
-        //         } else {
-        //             return null;
-        //         }
-        //     },
-        // }),
+        CredentialsProvider({
+            name: "Credentials",
+            credentials: {
+                email: { label: "Email", type: "text" },
+                password: { label: "Password", type: "password" },
+            },
+            async authorize(credentials) {
+                if (!credentials?.email || !credentials?.password) {
+                    console.error("Authorize: Credentials not provided");
+                    return null;
+                }
+                const userdata = await verifyUser(
+                    credentials.email,
+                    credentials.password,
+                );
+                // Returning null means the credentials are invalid
+                if (!userdata) {
+                    return null;
+                }
+                const user = {
+                    name: userdata.name,
+                    email: userdata.email,
+                    image: userdata.image ?? null,
+                    role: userdata.role,
+                    id: userdata.id,
+                };
+                return user;
+            },
+        }),
     ],
     adapter: DynamoDBAdapter(dynamoClient, { tableName: "user-auth" }),
     session: { strategy: "jwt" },

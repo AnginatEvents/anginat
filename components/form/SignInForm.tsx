@@ -20,7 +20,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link.js";
 import { loginSchema } from "@/schemas/loginSchema";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const SignInForm = () => {
     const form = useForm<z.infer<typeof loginSchema>>({
@@ -34,15 +35,26 @@ const SignInForm = () => {
     const [pending, startTransition] = useTransition();
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
+    const router = useRouter();
 
-    function onSubmit(values: z.infer<typeof loginSchema>) {
-        startTransition(() => {
-            login(values).then((data) => {
-                setSuccess(data.success);
-                setError(data.error);
+    const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+        console.log({ values });
+        startTransition(async () => {
+            const { email, password } = values;
+            const response = await signIn("credentials", {
+                email,
+                password,
+                redirect: false,
             });
+            console.log({ response });
+            if (!response?.error) {
+                setSuccess("You have successfully signed in.");
+                setTimeout(() => {
+                    router.push("/dashboard");
+                }, 500);
+            }
         });
-    }
+    };
 
     return (
         <Form {...form}>

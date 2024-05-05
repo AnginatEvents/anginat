@@ -1,6 +1,7 @@
 "use server";
 import { loginSchema } from "@/schemas/loginSchema";
 import * as z from "zod";
+import { signIn } from "next-auth/react";
 
 export const login = async (values: z.infer<typeof loginSchema>) => {
     // Validating on the server side is safer becausing valitaion on the login form can be bypassed

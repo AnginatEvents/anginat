@@ -49,6 +49,7 @@ export const createUser = async ({
             firstName: { S: name.split(" ")[0] },
             // Internal details for the table
             type: { S: "USER" },
+            id: { S: userId },
             pk: { S: `USER#${userId}` },
             sk: { S: `USER#${userId}` },
             GSI1PK: { S: `USER#${email}` },
@@ -105,7 +106,7 @@ export const getUserByEmail = async (email: string) => {
         const data = unmarshall(dbResponse.Items![0]);
         console.log(
             "GetUserByEmail: Item successfully retrieved from Dynamo db: ",
-            { data },
+            data,
         );
         return data;
     } catch (e) {
@@ -114,42 +115,36 @@ export const getUserByEmail = async (email: string) => {
     }
 };
 
-// export const verifyUser = async (email: string, password: string) => {
-//     let params = {
-//         TableName: "user-auth",
-//         Key: {
-//             email: { S: email.toString() },
-//         },
-//     };
-
-//     try {
-//         const getItemCommand = new GetItemCommand(params);
-//         const dbResponse = await db.send(getItemCommand);
-
-//         if (!dbResponse || !dbResponse.Item) {
-//             console.log("VerifyUser: No item found in Dynamo db for:  ", email);
-//             return null;
-//         }
-//         // Return the item if it exists
-//         console.log("VerifyUser: Item successfully retrieved from Dynamo db");
-//         const userdata = unmarshall(dbResponse.Item);
-//         const isValid = isValidPassword(
-//             password,
-//             userdata.hashstring,
-//             userdata.salt,
-//         );
-//         if (isValid) {
-//             console.log("VerifyUser: User verified successfully");
-//             console.log("Userdata: ", userdata);
-//             return userdata;
-//         }
-//         console.log("VerifyUser: User verification failed");
-//         return null;
-//     } catch (error) {
-//         console.error("VerifyUser: Error fetching item from Dynamo db", error);
-//         return null;
-//     }
-// };
+export const verifyUser = async (email: string, password: string) => {
+    try {
+        const userdata = await getUserByEmail(email);
+        if (!userdata) {
+            console.log("VerifyUser: User not found in Dynamo db");
+            return null;
+        }
+        // Return the item if it exists
+        console.log("VerifyUser: Item successfully retrieved from Dynamo db");
+        if (!userdata.hashstring || !userdata.salt) {
+            console.log("VerifyUser: Hash or salt not found in Dynamo db");
+            return null;
+        }
+        const isValid = isValidPassword(
+            password,
+            userdata.hashstring,
+            userdata.salt,
+        );
+        if (isValid) {
+            console.log("VerifyUser: User verified successfully");
+            console.log("Userdata: ", userdata);
+            return userdata;
+        }
+        console.log("VerifyUser: User verification failed");
+        return null;
+    } catch (error) {
+        console.error("VerifyUser: Error fetching item from Dynamo db", error);
+        return null;
+    }
+};
 
 export const updateUser = async (email: string, rolename: string) => {
     let params: UpdateItemCommandInput = {
